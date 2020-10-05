@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ItemCatalogue.Services
 {
-    public class ItemRepository : IItemRepository
+    public class InvItemRepository : IInvItemRepository
     {
         private readonly AppDbContext _appDbContext;
-        public ItemRepository(AppDbContext appDbContext)
+        public InvItemRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
