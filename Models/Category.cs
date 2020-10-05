@@ -10,6 +10,6 @@ namespace ItemCatalogue.Models
     {
         public int CategoryID { get; set; }
         public string Name { get; set; }
-        public Collection<Item> Items{ get; set; }
+        public virtual ICollection<Item> Items{ get; set; }
     }
 }
