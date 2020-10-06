@@ -57,6 +57,14 @@ namespace ItemCatalogue.Data
                 Description = "Good in a pinch.",
                 CategoryID = 2
             });
+            modelBuilder.Entity<BaseItem>().HasData(new BaseItem
+            {
+                BaseItemID = 6,
+                Name = "Newt's eye",
+                BasePrice = 9.00M,
+                Description = "Yikes.",
+                CategoryID = 1
+            });
 
         }
     }

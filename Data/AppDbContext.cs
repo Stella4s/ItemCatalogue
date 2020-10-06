@@ -14,7 +14,7 @@ namespace ItemCatalogue.Data
 
         }
         //Add DbSet's for each model needed to be included in the database.
-        public DbSet<BaseItem> Items { get; set; }
+        public DbSet<BaseItem> BaseItems { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<InvItem> InvItems { get; set; }
 
