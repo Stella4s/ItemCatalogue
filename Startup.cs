@@ -26,12 +26,16 @@ namespace ItemCatalogue
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<AppDbContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IBaseItemRepository, BaseItemRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<Inventory>(i => Inventory.GetInventory(i));
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
+
             services.AddControllersWithViews();
         }
 
@@ -50,6 +54,8 @@ namespace ItemCatalogue
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 

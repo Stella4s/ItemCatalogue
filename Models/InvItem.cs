@@ -18,6 +18,8 @@ namespace ItemCatalogue.Models
 
         public ItemQuality Quality { get; set; }
 
+        public string InventoryID { get; set; }
+
     }
 }
 public enum ItemQuality
