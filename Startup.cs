@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ItemCatalogue.Models;
-using ItemCatalogue.Services;
+using ItemCatalogue.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +30,7 @@ namespace ItemCatalogue
             services.AddDbContext<AppDbContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IBaseItemRepository, BaseItemRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddControllersWithViews();
         }

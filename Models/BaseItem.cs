@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ItemCatalogue.Models
 {
-    public class Item
+    public class BaseItem
     {
-        public int ItemID { get; set; }
+        public int BaseItemID { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
 

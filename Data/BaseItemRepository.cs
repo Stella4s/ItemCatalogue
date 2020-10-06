@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ItemCatalogue.Services
+namespace ItemCatalogue.Data
 {
-    public class ItemRepository : IItemRepository
+    public class BaseItemRepository : IBaseItemRepository
     {
         private readonly AppDbContext _appDbContext;
-        public ItemRepository(AppDbContext appDbContext)
+        public BaseItemRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Item> AllItems
+        public IEnumerable<BaseItem> AllItems
         {
             get
             {
@@ -23,9 +23,9 @@ namespace ItemCatalogue.Services
             }
         }
 
-        public Item GetItemById(int itemID)
+        public BaseItem GetItemById(int itemID)
         {
-            return _appDbContext.Items.FirstOrDefault(p => p.ItemID == itemID);
+            return _appDbContext.Items.FirstOrDefault(p => p.BaseItemID == itemID);
         }
     }
 }

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ItemCatalogue.Services
+namespace ItemCatalogue.Data
 {
     public interface IInvItemRepository
     {
-        IEnumerable<Item> AllItems { get; }
-        Item GetItemById(int itemID);
+        IEnumerable<InvItem> AllItems { get; }
+        InvItem GetItemById(int itemID);
     }
 }

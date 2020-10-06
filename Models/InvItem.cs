@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace ItemCatalogue.Models
 {
-    public class InvItem : Item
+    public class InvItem
     {
         public int InvItemID { get; set; }
+
+        public int BaseItemID { get; set; }
+        public BaseItem BaseItem { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }

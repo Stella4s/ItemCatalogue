@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ItemCatalogue.Services
+namespace ItemCatalogue.Data
 {
     public class InvItemRepository : IInvItemRepository
     {
@@ -15,17 +15,17 @@ namespace ItemCatalogue.Services
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Item> AllItems
+        public IEnumerable<InvItem> AllItems
         {
             get
             {
-                return _appDbContext.Items.Include(c => c.MainCategory);
+                return _appDbContext.InvItems.Include(c => c.BaseItem);
             }
         }
 
-        public Item GetItemById(int itemID)
+        public InvItem GetItemById(int itemID)
         {
-            return _appDbContext.Items.FirstOrDefault(p => p.ItemID == itemID);
+            return _appDbContext.InvItems.FirstOrDefault(p => p.InvItemID == itemID);
         }
     }
 }
