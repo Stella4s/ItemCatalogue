@@ -30,6 +30,7 @@ namespace ItemCatalogue
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IBaseItemRepository, BaseItemRepository>();
+            services.AddScoped<IInvItemRepository, InvItemRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<Inventory>(i => Inventory.GetInventory(i));
 

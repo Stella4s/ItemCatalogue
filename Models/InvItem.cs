@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemCatalogue.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace ItemCatalogue.Models
 {
     public class InvItem
     {
+        private readonly AppDbContext _appDbContext;
         public int InvItemID { get; set; }
 
         public int BaseItemID { get; set; }
@@ -19,6 +21,12 @@ namespace ItemCatalogue.Models
         public ItemQuality Quality { get; set; }
 
         public string InventoryID { get; set; }
+
+        public InvItem()
+        {
+            Quality = ItemQuality.Basic;
+        }
+
 
     }
 }
