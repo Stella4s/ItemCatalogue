@@ -8,7 +8,7 @@ namespace ItemCatalogue.Data
 {
     public interface IInvItemRepository
     {
-        IEnumerable<InvItem> AllItems { get; }
-        InvItem GetItemById(int itemID);
+        Task<IEnumerable<InvItem>> GetAllItemsAsync();
+        Task<InvItem> GetItemByIdAsync(int itemID);
     }
 }

@@ -13,17 +13,19 @@ namespace ItemCatalogue.Controllers
     public class BaseItemsController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IBaseItemRepository _baseItemRepository;
 
-        public BaseItemsController(AppDbContext context)
+        public BaseItemsController(AppDbContext context, IBaseItemRepository baseItemRepository)
         {
             _context = context;
+            _baseItemRepository = baseItemRepository;
         }
 
         // GET: BaseItems
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.BaseItems.Include(b => b.MainCategory);
-            return View(await appDbContext.ToListAsync());
+            var appDbContext = await _baseItemRepository.GetAllItemsAsync();
+            return View(appDbContext);
         }
 
         // GET: BaseItems/Details/5
@@ -34,9 +36,12 @@ namespace ItemCatalogue.Controllers
                 return NotFound();
             }
 
-            var baseItem = await _context.BaseItems
+            /*var baseItem = await _context.BaseItems
                 .Include(b => b.MainCategory)
-                .FirstOrDefaultAsync(m => m.BaseItemID == id);
+                .FirstOrDefaultAsync(m => m.BaseItemID == id);*/
+            
+            var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
+            
             if (baseItem == null)
             {
                 return NotFound();
@@ -77,7 +82,8 @@ namespace ItemCatalogue.Controllers
                 return NotFound();
             }
 
-            var baseItem = await _context.BaseItems.FindAsync(id);
+            //var baseItem = await _context.BaseItems.FindAsync(id);
+            var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
             if (baseItem == null)
             {
                 return NotFound();
@@ -130,9 +136,10 @@ namespace ItemCatalogue.Controllers
                 return NotFound();
             }
 
-            var baseItem = await _context.BaseItems
+            /*var baseItem = await _context.BaseItems
                 .Include(b => b.MainCategory)
-                .FirstOrDefaultAsync(m => m.BaseItemID == id);
+                .FirstOrDefaultAsync(m => m.BaseItemID == id);*/
+            var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
             if (baseItem == null)
             {
                 return NotFound();
@@ -146,7 +153,8 @@ namespace ItemCatalogue.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var baseItem = await _context.BaseItems.FindAsync(id);
+            //var baseItem = await _context.BaseItems.FindAsync(id);
+            var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
             _context.BaseItems.Remove(baseItem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
