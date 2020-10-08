@@ -1,0 +1,28 @@
+﻿@model InventoryViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Your Inventory</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Quality</th>
+            <th class="text-right">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var line in Model.Inventory.InventoryItems)
+        {
+        <tr>
+            <td class="text-left">@line.BaseItem.Name</td>
+            <td class="text-left">@line.Quality</td>
+            <td class="text-right">@line.Price.ToString("c")</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+

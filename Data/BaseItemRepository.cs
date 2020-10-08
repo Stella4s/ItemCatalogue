@@ -22,10 +22,11 @@ namespace ItemCatalogue.Data
                 return _appDbContext.BaseItems.Include(c => c.MainCategory);
             }
         }
-
+        
         public BaseItem GetItemById(int itemID)
         {
             return _appDbContext.BaseItems.FirstOrDefault(p => p.BaseItemID == itemID);
         }
+        
     }
 }
