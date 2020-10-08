@@ -48,7 +48,7 @@ namespace ItemCatalogue.Controllers
         // GET: BaseItems/Create
         public IActionResult Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ItemCatalogue.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", baseItem.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
             return View(baseItem);
         }
 
@@ -82,7 +82,7 @@ namespace ItemCatalogue.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", baseItem.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
             return View(baseItem);
         }
 
@@ -118,7 +118,7 @@ namespace ItemCatalogue.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryID", baseItem.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
             return View(baseItem);
         }
 

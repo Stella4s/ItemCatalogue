@@ -1,4 +1,6 @@
 ﻿using ItemCatalogue.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,6 +25,7 @@ namespace ItemCatalogue.Models
             set { _Price = value; }
         }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ItemQuality Quality { get; set; }
 
         public string InventoryID { get; set; }

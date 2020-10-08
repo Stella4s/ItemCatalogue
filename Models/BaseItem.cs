@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace ItemCatalogue.Models
 {
@@ -20,6 +22,8 @@ namespace ItemCatalogue.Models
 
         public string Description { get; set; }
         public int CategoryID { get; set; }
+
+        [DisplayName("Category")]
         public Category MainCategory { get; set; }
     }
 }

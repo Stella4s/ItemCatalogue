@@ -24,6 +24,8 @@ namespace ItemCatalogue.Models
             _appDbContext = appDbContext;
         }
 
+        //Used actual session ids.
+        /*
         /// <summary>
         /// Checks if this session already has an Inventory. If so returns that inventory, if not creates a new Inventory for it.
         /// </summary>
@@ -39,6 +41,20 @@ namespace ItemCatalogue.Models
             string inventoryID = session.GetString("InventoryID") ?? Guid.NewGuid().ToString();
 
             session.SetString("InventoryID", inventoryID);
+
+            return new Inventory(context) { InventoryID = inventoryID };
+        }*/
+
+        /// <summary>
+        /// Sets the InventoryID at the start of each session to 1.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static Inventory GetInventory(IServiceProvider services)
+        {
+            string inventoryID = "1";
+
+            var context = services.GetService<AppDbContext>();
 
             return new Inventory(context) { InventoryID = inventoryID };
         }
