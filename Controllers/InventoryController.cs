@@ -26,8 +26,11 @@ namespace ItemCatalogue.Controllers
         // GET: InventoryController
         public ActionResult Index()
         {
-            var items = _inventory.GetInventoryItems();
-            _inventory.InventoryItems = items;
+            //var items = _inventory.GetInventoryItems();
+            //_inventory.InventoryItems = items;
+
+            var items = _inventory.GetInventoryItemsAsync();
+            _inventory.InventoryItems = items.Result;
 
             var inventoryViewModel = new InventoryViewModel
             {
@@ -37,6 +40,8 @@ namespace ItemCatalogue.Controllers
 
             return View(inventoryViewModel);
         }
+
+
 
         public RedirectToActionResult AddToInventory(int bItemID)
         {

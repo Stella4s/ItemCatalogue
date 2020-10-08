@@ -57,7 +57,8 @@ namespace ItemCatalogue.Models
                 var inventoryItem = new InvItem
                 {
                     InventoryID = InventoryID,
-                    BaseItem = bItem
+                    BaseItem = bItem,
+                    Quality = ItemQuality.Good
                 };
                 _appDbContext.InvItems.Add(inventoryItem);
             }
@@ -126,6 +127,14 @@ namespace ItemCatalogue.Models
                 _appDbContext.InvItems.Where(c => c.InventoryID == InventoryID)
                 .Include(s => s.BaseItem)
                 .ToList());   
+        }
+        public async Task<List<InvItem>> GetInventoryItemsAsync()
+        {
+            return InventoryItems ??
+                   (InventoryItems = await
+                   _appDbContext.InvItems.Where(c => c.InventoryID == InventoryID)
+                   .Include(s => s.BaseItem)
+                   .ToListAsync());
         }
 
         /// <summary>
