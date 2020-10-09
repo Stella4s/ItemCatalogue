@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ItemCatalogue.Data;
 using ItemCatalogue.Models;
+using ItemCatalogue.ViewModels;
+using System.Collections;
+using System.ComponentModel;
 
 namespace ItemCatalogue.Controllers
 {
@@ -14,11 +17,13 @@ namespace ItemCatalogue.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IBaseItemRepository _baseItemRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public BaseItemsController(AppDbContext context, IBaseItemRepository baseItemRepository)
+        public BaseItemsController(AppDbContext context, IBaseItemRepository baseItemRepository, ICategoryRepository categoryRepository)
         {
             _context = context;
             _baseItemRepository = baseItemRepository;
+            _categoryRepository = categoryRepository;
         }
 
         // GET: BaseItems
@@ -35,10 +40,6 @@ namespace ItemCatalogue.Controllers
             {
                 return NotFound();
             }
-
-            /*var baseItem = await _context.BaseItems
-                .Include(b => b.MainCategory)
-                .FirstOrDefaultAsync(m => m.BaseItemID == id);*/
             
             var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
             
@@ -51,10 +52,14 @@ namespace ItemCatalogue.Controllers
         }
 
         // GET: BaseItems/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name");
-            return View();
+            var vm = new BaseItemsCreateEditViewModel
+            {
+                Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name")
+            };
+
+            return View(vm);
         }
 
         // POST: BaseItems/Create
@@ -62,7 +67,7 @@ namespace ItemCatalogue.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BaseItemID,Name,ImageUrl,BasePrice,Description,CategoryID")] BaseItem baseItem)
+        public async Task<IActionResult> Create([Bind("BaseItemID,Name,ImageUrl,BasePrice,Description,CategoryID")]BaseItem baseItem ,BaseItemsCreateEditViewModel vm)
         {
             if (ModelState.IsValid)
             {
@@ -70,8 +75,9 @@ namespace ItemCatalogue.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
-            return View(baseItem);
+            vm.Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name", baseItem.CategoryID);
+
+            return View(vm);
         }
 
         // GET: BaseItems/Edit/5
@@ -82,14 +88,20 @@ namespace ItemCatalogue.Controllers
                 return NotFound();
             }
 
-            //var baseItem = await _context.BaseItems.FindAsync(id);
             var baseItem = await _baseItemRepository.GetItemByIdAsync((int)id);
             if (baseItem == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
-            return View(baseItem);
+
+            var vm = new BaseItemsCreateEditViewModel
+            {
+                Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name"),
+                BaseItem = baseItem
+            };
+
+            //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
+            return View(vm);
         }
 
         // POST: BaseItems/Edit/5
@@ -124,7 +136,14 @@ namespace ItemCatalogue.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
+
+            var vm = new BaseItemsCreateEditViewModel
+            {
+                Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name", baseItem.CategoryID),
+                BaseItem = baseItem
+            };
+
+            //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", baseItem.CategoryID);
             return View(baseItem);
         }
 
