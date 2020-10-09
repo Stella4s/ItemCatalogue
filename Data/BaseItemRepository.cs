@@ -15,17 +15,14 @@ namespace ItemCatalogue.Data
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<BaseItem> AllItems
+        public async Task<IEnumerable<BaseItem>> GetAllItemsAsync()
         {
-            get
-            {
-                return _appDbContext.BaseItems.Include(c => c.MainCategory);
-            }
+            return await _appDbContext.BaseItems.Include(c => c.MainCategory).ToListAsync();
         }
         
-        public BaseItem GetItemById(int itemID)
+        public async Task<BaseItem> GetItemByIdAsync(int itemID)
         {
-            return _appDbContext.BaseItems.FirstOrDefault(p => p.BaseItemID == itemID);
+            return await _appDbContext.BaseItems.FirstOrDefaultAsync(p => p.BaseItemID == itemID);
         }
         
     }

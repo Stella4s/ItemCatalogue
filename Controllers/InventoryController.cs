@@ -24,13 +24,10 @@ namespace ItemCatalogue.Controllers
         }
 
         // GET: InventoryController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            //var items = _inventory.GetInventoryItems();
-            //_inventory.InventoryItems = items;
-
-            var items = _inventory.GetInventoryItemsAsync();
-            _inventory.InventoryItems = items.Result;
+            var items = await _inventory.GetInventoryItemsAsync();
+            _inventory.InventoryItems = items;
 
             var inventoryViewModel = new InventoryViewModel
             {
@@ -41,51 +38,27 @@ namespace ItemCatalogue.Controllers
             return View(inventoryViewModel);
         }
 
-
-
-        public RedirectToActionResult AddToInventory(int bItemID)
+        public async Task<RedirectToActionResult> AddToInventory(int bItemID)
         {
-            var selectedItem = _baseItemRepository.AllItems.FirstOrDefault(i => i.BaseItemID == bItemID);
+            var selectedItem = await _baseItemRepository.GetItemByIdAsync(bItemID);
 
             if (selectedItem != null)
             {
-                _inventory.AddToInventory(selectedItem, 1);
+                await _inventory.AddToInventoryAsync(selectedItem, 1);
             }
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoveFromInventory(int itemID)
+        public async Task<RedirectToActionResult> RemoveFromInventory(int itemID)
         {
-            var selectedItem = _invItemRepository.AllItems.FirstOrDefault(i => i.InvItemID == itemID);
+            var selectedItem = await _invItemRepository.GetItemByIdAsync(itemID);
 
             if (selectedItem != null)
             {
-                _inventory.RemoveFromInventory(selectedItem);
+                await _inventory.RemoveFromInventoryAsync(selectedItem);
             }
             return RedirectToAction("Index");
         }
 
-
-        /*
-        // GET: InventoryController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: InventoryController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
     }
 }

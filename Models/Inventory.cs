@@ -64,7 +64,7 @@ namespace ItemCatalogue.Models
         /// </summary>
         /// <param name="bItem">BaseItem the InvItems will be based on.</param>
         /// <param name="amount">Amount of InvItems to add.</param>
-        public void AddToInventory(BaseItem bItem, int amount)
+        public async Task AddToInventoryAsync(BaseItem bItem, int amount)
         {
             //Make new InvItems based on the passed BaseItem.
             //Looping through to create as many as the amount requires.
@@ -76,28 +76,27 @@ namespace ItemCatalogue.Models
                     BaseItem = bItem,
                     Quality = ItemQuality.Good
                 };
-                _appDbContext.InvItems.Add(inventoryItem);
+                await _appDbContext.InvItems.AddAsync(inventoryItem);
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
         /// <summary>
         /// Removes a specified InvItem from the Inventory.
         /// </summary>
         /// <param name="iItem">InvItem</param>
-        public void RemoveFromInventory(InvItem iItem)
+        public async Task RemoveFromInventoryAsync(InvItem iItem)
         {
-            var invItem =
-                _appDbContext.InvItems.SingleOrDefault(
-                    s => s.InvItemID == iItem.InvItemID);
+            var invItem = await _appDbContext.InvItems.SingleOrDefaultAsync(
+                s => s.InvItemID == iItem.InvItemID);
 
             if (invItem != null)
             {
                 _appDbContext.InvItems.Remove(invItem);
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -105,15 +104,15 @@ namespace ItemCatalogue.Models
         /// </summary>
         /// <param name="bItem">Specified BaseItem</param>
         /// <param name="amount">Amount to remove</param>
-        public void RemoveFromInventory(BaseItem bItem, int amount)
+        public async Task RemoveFromInventoryAsync(BaseItem bItem, int amount)
         {
             //Find all InvItems that are the right BaseItem and are from this Inventory.
             //Put them in a list Ordered by Price.
-            var invItems =
-                _appDbContext.InvItems.Where(
-                    s => s.BaseItem.BaseItemID == bItem.BaseItemID && s.InventoryID == InventoryID)
+            var invItems = 
+                await _appDbContext.InvItems
+                .Where(s => s.BaseItem.BaseItemID == bItem.BaseItemID && s.InventoryID == InventoryID)
                 .OrderBy(s => s.Price)
-                .ToList();
+                .ToListAsync();
 
             if (invItems != null)
             {
@@ -129,26 +128,18 @@ namespace ItemCatalogue.Models
                 }
             }
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
         /// <summary>
         /// Checks if the InventoryItems were already retrieved. If not, retrieves them.
         /// </summary>
         /// <returns>CurrentSession InventoryItems</returns>
-        public List<InvItem> GetInventoryItems()
-        {
-            return InventoryItems ??
-                (InventoryItems =
-                _appDbContext.InvItems.Where(c => c.InventoryID == InventoryID)
-                .Include(s => s.BaseItem)
-                .ToList());   
-        }
         public async Task<List<InvItem>> GetInventoryItemsAsync()
         {
             return InventoryItems ??
-                   (InventoryItems = await
-                   _appDbContext.InvItems.Where(c => c.InventoryID == InventoryID)
+                   (InventoryItems = await _appDbContext.InvItems
+                   .Where(c => c.InventoryID == InventoryID)
                    .Include(s => s.BaseItem)
                    .ToListAsync());
         }
@@ -156,7 +147,7 @@ namespace ItemCatalogue.Models
         /// <summary>
         /// Removes all items from Inventory.
         /// </summary>
-        public void ClearInventory()
+        public async Task ClearInventoryAsync()
         {
             var invItems = _appDbContext
                 .InvItems
@@ -164,7 +155,7 @@ namespace ItemCatalogue.Models
 
             _appDbContext.InvItems.RemoveRange(invItems);
 
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
     }
 }
