@@ -8,6 +8,6 @@ namespace ItemCatalogue.Data
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> AllCategories { get; }
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
     }
 }

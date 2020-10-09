@@ -1,4 +1,5 @@
 ﻿using ItemCatalogue.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace ItemCatalogue.Data
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Category> AllCategories => _appDbContext.Categories;
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        {
+            return await _appDbContext.Categories.ToListAsync();
+        }
     }
 }
