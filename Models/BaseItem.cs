@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using ItemCatalogue.Helpers;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,8 @@ namespace ItemCatalogue.Models
     {
         public int BaseItemID { get; set; }
         public string Name { get; set; }
+
+        [DisplayName("Image")]
         public string ImageUrl { get; set; }
 
 
