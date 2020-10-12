@@ -72,9 +72,34 @@ body {
 
 /* Custom Types
 ------------------------------------------------*/
-.img-tinyitem {
-    border-style: none;
-    object-fit: contain;
-    height: auto;
-    max-width: 50%;
+.table-catalogue {
+    width: 100%;
+    margin-bottom: 1rem;
+    /*color: #212529;*/
 }
+
+    .table-catalogue th,
+    .table-catalogue td {
+        padding: 0.20rem;
+        vertical-align: middle;
+        /* border-top: 1px solid #dee2e6;*/
+
+    }
+
+    .table-catalogue th:first-child,
+    .table-catalogue td:first-child {
+        width: 3em;
+    }
+
+    .table-catalogue thead th {
+        vertical-align: bottom;
+        /*border-bottom: 2px solid #dee2e6;*/
+    }
+
+    .table-catalogue tbody + tbody {
+        /*border-top: 2px solid #dee2e6;*/
+    }
+
+    .table-catalogue img {
+        width: 2em;
+    }

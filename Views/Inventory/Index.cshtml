@@ -5,21 +5,23 @@
 
 <h2>Your Inventory</h2>
 
-<table class="table table-bordered table-striped">
+<table class="table table-catalogue">
     <thead>
         <tr>
+            <th></th>
             <th>Item</th>
             <th>Quality</th>
-            <th class="text-right">Price</th>
+            <th>Price</th>
         </tr>
     </thead>
     <tbody>
-        @foreach(var line in Model.Inventory.InventoryItems)
+        @foreach(var item in Model.Inventory.InventoryItems)
         {
         <tr>
-            <td class="text-left">@line.BaseItem.Name</td>
-            <td class="text-left">@line.Quality</td>
-            <td class="text-right">@line.Price.ToString("c")</td>
+            <td><img src="@Url.Content("~/Images/" + item.BaseItem.ImageUrl)"/></td>
+            <td >@item.BaseItem.Name</td>
+            <td >@item.Quality</td>
+            <td >@item.Price.ToString("c")</td>
         </tr>
         }
     </tbody>
