@@ -1,0 +1,13 @@
+﻿
+@model BaseItem
+
+
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div>
+        <img src="@Url.Content("~/Images/" + Model.ImageUrl)"/>
+        <div>
+            <p>@Model.Description</p>
+            <h4>@Model.BasePrice.ToString("c")</h4>
+        </div>
+    </div>
+</div>
