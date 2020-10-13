@@ -1,65 +1,102 @@
-﻿@model IEnumerable<ItemCatalogue.Models.BaseItem>
+﻿@model BaseItemIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<div class="row">
-    <div class="col-md-8">
-        <h1>Index</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <h1>Index</h1>
 
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
-        <table class="table table-catalogue">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.BasePrice)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MainCategory)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <img src="@Url.Content("~/Images/" + item.ImageUrl)" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BasePrice)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MainCategory.Name)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.BaseItemID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.BaseItemID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.BaseItemID">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <partial name="_ItemDetailCard" model="Model.FirstOrDefault()"/>
+    <div class="row">    
+        <div class="col-sm-12 col-md-9">
+
+
+            <div class="row">
+                <table class="table table-catalogue table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().BasePrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().MainCategory)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.BaseItems)
+                        {
+                            string selectedRow = "";
+                            if (item.BaseItemID == (int?)ViewData["SelectedID"])
+                            {
+                                selectedRow = "table-success";
+                            }
+                            <tr class="@selectedRow" asp-action="Index" asp-route-id="@item.BaseItemID">
+                                <td>
+                                    <img src="@Url.Content("~/Images/" + item.ImageUrl)" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BasePrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MainCategory.Name)
+                                </td>
+                                <td>
+                                    <a asp-action="Index" asp-route-id="@item.BaseItemID">Select</a> |
+                                    <a asp-action="Edit" asp-route-id="@item.BaseItemID">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.BaseItemID">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.BaseItemID">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="list-group table-catalogue">
+                    @foreach (var item in Model.BaseItems)
+                    {
+                        <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action table-catalogue-row align-items-center justify-content-center">
+                            <div >  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                            <div > @Html.DisplayFor(modelItem => item.Name)</div>
+                            <div > @Html.DisplayFor(modelItem => item.BasePrice)</div>
+                            <div > @Html.DisplayFor(modelItem => item.Description)</div>
+                            <div > @Html.DisplayFor(modelItem => item.MainCategory.Name)</div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+            @if (Model.SelectedBaseItem != null)
+            {
+                <partial name="_ItemDetailCard" model="@Model.SelectedBaseItem" />
+            }
+        </div>
     </div>
 </div>

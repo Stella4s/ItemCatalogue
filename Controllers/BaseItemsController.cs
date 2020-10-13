@@ -27,10 +27,17 @@ namespace ItemCatalogue.Controllers
         }
 
         // GET: BaseItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var appDbContext = await _baseItemRepository.GetAllItemsAsync();
-            return View(appDbContext);
+            var vm = new BaseItemIndexViewModel();
+            vm.BaseItems = await _baseItemRepository.GetAllItemsAsync();
+
+            if (id != null)
+            {
+                ViewData["SelectedID"] = id.Value;
+                vm.SelectedBaseItem = vm.BaseItems.Where(i => i.BaseItemID == id.Value).Single();
+            }
+            return View(vm);
         }
 
         // GET: BaseItems/Details/5
