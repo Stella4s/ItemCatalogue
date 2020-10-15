@@ -38,16 +38,21 @@ namespace ItemCatalogue.Controllers
             return View(inventoryViewModel);
         }
 
-        public async Task<RedirectToActionResult> AddToInventory(int bItemID)
+        public async Task<RedirectToActionResult> AddToInventory(int bItemID, int? amount)
         {
+            int itemAmount = 1;
+            if (amount.HasValue)
+                itemAmount = (int)amount;
+
             var selectedItem = await _baseItemRepository.GetItemByIdAsync(bItemID);
 
             if (selectedItem != null)
             {
-                await _inventory.AddToInventoryAsync(selectedItem, 1);
+                await _inventory.AddToInventoryAsync(selectedItem, itemAmount);
             }
             return RedirectToAction("Index");
         }
+
 
         public async Task<RedirectToActionResult> RemoveFromInventory(int itemID)
         {

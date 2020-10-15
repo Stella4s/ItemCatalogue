@@ -11,7 +11,7 @@
             <th></th>
             <th>Item</th>
             <th>Quality</th>
-            <th>Price</th>
+            <th>Value</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
             <td><img src="@Url.Content("~/Images/" + item.BaseItem.ImageUrl)"/></td>
             <td >@item.BaseItem.Name</td>
             <td >@item.Quality</td>
-            <td >@item.Price.ToString("c")</td>
+            <td >@item.Price.ToString("n2")</td>
         </tr>
         }
     </tbody>

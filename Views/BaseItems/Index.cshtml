@@ -7,13 +7,22 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-9">
-            <h1>Index</h1>
 
-            <p>
+            <div class="mb-1">
                 <a asp-action="Create">Create New</a>
-            </p>
+
+                <div class="d-inline-flex">
+                    @if (Model.SelectedBaseItem != null)
+                    {
+                        <partial name="_ItemToInventoryButtons" model="@Model.SelectedBaseItem.BaseItemID" />
+                    }
+                </div>
+
+            </div>
+
         </div>
     </div>
+
     <div class="row">    
         <div class="col-9">
 
@@ -99,9 +108,12 @@
                         @foreach (var item in Model.BaseItems)
                         {
                             string selectedRow = "";
-                            if (item.BaseItemID == (int?)ViewData["SelectedID"])
+                            if (Model.SelectedBaseItem != null)
                             {
-                                selectedRow = "active";
+                                if (item.BaseItemID == (int?)Model.SelectedBaseItem.BaseItemID)
+                                {
+                                    selectedRow = "active";
+                                }
                             }
                             <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
                                 <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
@@ -130,6 +142,7 @@
                     <partial name="_ItemPageLinks" model="@Model.SelectedBaseItem.BaseItemID"/>
                 }
             </div>
+
         </div>
     </div>
 </div>

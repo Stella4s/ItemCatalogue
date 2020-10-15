@@ -34,7 +34,6 @@ namespace ItemCatalogue.Controllers
 
             if (id != null)
             {
-                ViewData["SelectedID"] = id.Value;
                 vm.SelectedBaseItem = vm.BaseItems.Where(i => i.BaseItemID == id.Value).Single();
             }
             return View(vm);
