@@ -17,9 +17,9 @@
     <div class="row">    
         <div class="col-sm-12 col-md-9">
 
-
+           <!-- Previous Table solution
             <div class="row">
-                <table class="table table-catalogue table-hover">
+                <table class="table table-catalogue">
                     <thead>
                         <tr>
                             <th></th>
@@ -75,21 +75,46 @@
 
                 </table>
             </div>
+            -->
 
-            <div class="row">
-                <div class="list-group table-catalogue">
-                    @foreach (var item in Model.BaseItems)
-                    {
-                        <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action table-catalogue-row align-items-center justify-content-center">
-                            <div >  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
-                            <div > @Html.DisplayFor(modelItem => item.Name)</div>
-                            <div > @Html.DisplayFor(modelItem => item.BasePrice)</div>
-                            <div > @Html.DisplayFor(modelItem => item.Description)</div>
-                            <div > @Html.DisplayFor(modelItem => item.MainCategory.Name)</div>
-                        </a>
-                    }
+           <div class="list-group list-group-flush mimic-table table">
+                    <div class="mimic-headergroup">
+                        <div class="mimic-row">
+                            <div></div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Name)
+                            </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().BasePrice)
+                            </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Description)
+                            </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().MainCategory)
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="mimic-rowgroup">
+                        @foreach (var item in Model.BaseItems)
+                        {
+                            string selectedRow = "";
+                            if (item.BaseItemID == (int?)ViewData["SelectedID"])
+                            {
+                                selectedRow = "active";
+                            }
+                            <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                                <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                                <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                                <div> @Html.DisplayFor(modelItem => item.BasePrice)</div>
+                                <div> @Html.DisplayFor(modelItem => item.Description)</div>
+                                <div> @Html.DisplayFor(modelItem => item.MainCategory.Name)</div>
+                            </a>
+                        }
+                    </div>
                 </div>
-            </div>
+
         </div>
 
         <div class="col-sm-12 col-md-3">

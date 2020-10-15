@@ -72,13 +72,14 @@ body {
 
 /* Custom Types
 ------------------------------------------------*/
+
+/*--------------------------------------*/
 .table-catalogue {
     width: 100%;
     margin-bottom: 1rem;
     /*color: #212529;*/
 }
-/* table catalogue Table tags
---------------------------------*/
+/* table-catalogue Table tags*/
     .table-catalogue th,
     .table-catalogue td {
         padding: 0.20rem;
@@ -105,21 +106,51 @@ body {
         width: 2em;
     }
 
-/*table catalogue row
---------------------------------*/
-.table-catalogue-row {
+
+/*Mimic table catalogue
+    -----------------------------*/
+.mimic-table {
+    display: table;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-spacing: 2px;
+    border-collapse: collapse;
+}
+
+    .mimic-table img {
+        width: 2em;
+    }
+
+
+.mimic-headergroup {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+    .mimic-headergroup div > div {
+        vertical-align: bottom;
+        font-weight: bold;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+.mimic-rowgroup {
+    display: table-row-group;
+}
+
+.mimic-row {
     display: table-row;
     padding: 0.20rem;
     vertical-align: middle;
-    border-top: 1px solid #dee2e6;
 }
 
-/*These would be the table cells.*/
-    .table-catalogue-row div {
+    .mimic-row div {
         display: table-cell;
-        padding: 18px;
+        padding: 0.20rem;
+        vertical-align: middle;
+        border-top: 1px solid #dee2e6;
     }
 
-.table-catalogue-row div:first-child {
+        .mimic-row div:first-child {
             width: 3em;
-    }
+        }
