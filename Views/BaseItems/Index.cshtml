@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row">    
-        <div class="col-sm-12 col-md-9">
+        <div class="col-9">
 
            <!-- Previous Table solution
             <div class="row">
@@ -93,7 +93,6 @@
                             <div>
                                 @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().MainCategory)
                             </div>
-                            <div></div>
                         </div>
                     </div>
                     <div class="mimic-rowgroup">
@@ -117,11 +116,20 @@
 
         </div>
 
-        <div class="col-sm-12 col-md-3">
-            @if (Model.SelectedBaseItem != null)
-            {
-                <partial name="_ItemDetailCard" model="@Model.SelectedBaseItem" />
-            }
+        <div class="col-3">
+            <div class="col">
+                @if (Model.SelectedBaseItem != null)
+                {
+                    <partial name="_ItemDetailCard" model="@Model.SelectedBaseItem" />
+                }
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                @if (Model.SelectedBaseItem != null)
+                {
+                    <partial name="_ItemPageLinks" model="@Model.SelectedBaseItem.BaseItemID"/>
+                }
+            </div>
         </div>
     </div>
 </div>
