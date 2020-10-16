@@ -104,7 +104,7 @@ namespace ItemCatalogue.Models
         /// </summary>
         /// <param name="bItem">Specified BaseItem</param>
         /// <param name="amount">Amount to remove</param>
-        public async Task RemoveFromInventoryAsync(BaseItem bItem, int amount)
+        public async Task RemoveBaseItemFromInventoryAsync(BaseItem bItem, int amount)
         {
             //Find all InvItems that are the right BaseItem and are from this Inventory.
             //Put them in a list Ordered by Price.

@@ -24,27 +24,32 @@ namespace ItemCatalogue.Controllers
         }
 
         // GET: InventoryController
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             var items = await _inventory.GetInventoryItemsAsync();
             _inventory.InventoryItems = items;
 
-            var inventoryViewModel = new InventoryViewModel
+            var vm = new InventoryViewModel
             {
                 Inventory = _inventory,
                 Coin = _inventory.Coin
             };
 
-            return View(inventoryViewModel);
+            if (id.HasValue)
+            {
+                vm.SelectedInvItem = vm.Inventory.InventoryItems.Where(i => i.InvItemID == id.Value).Single();
+            }
+
+            return View(vm);
         }
 
-        public async Task<RedirectToActionResult> AddToInventory(int bItemID, int? amount)
+        public async Task<RedirectToActionResult> AddToInventory(int id, int? amount)
         {
             int itemAmount = 1;
             if (amount.HasValue)
                 itemAmount = (int)amount;
 
-            var selectedItem = await _baseItemRepository.GetItemByIdAsync(bItemID);
+            var selectedItem = await _baseItemRepository.GetItemByIdAsync(id);
 
             if (selectedItem != null)
             {
@@ -54,9 +59,9 @@ namespace ItemCatalogue.Controllers
         }
 
 
-        public async Task<RedirectToActionResult> RemoveFromInventory(int itemID)
+        public async Task<RedirectToActionResult> RemoveFromInventory(int id)
         {
-            var selectedItem = await _invItemRepository.GetItemByIdAsync(itemID);
+            var selectedItem = await _invItemRepository.GetItemByIdAsync(id);
 
             if (selectedItem != null)
             {

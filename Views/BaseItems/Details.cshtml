@@ -48,9 +48,6 @@
 </div>
 <div>
     <p class="button">
-        <a class="btn btn-primary"
-           asp-controller="Inventory"
-           asp-action="AddToInventory"
-           asp-route-bItemID="@Model.BaseItemID">Add to Inventory</a>
+        <partial name="_ItemToInventoryButtons" model="@Model.BaseItemID" />
     </p>
 </div>

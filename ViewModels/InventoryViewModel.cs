@@ -8,6 +8,7 @@ namespace ItemCatalogue.ViewModels
 {
     public class InventoryViewModel
     {
+        public InvItem SelectedInvItem { get; set; }
         public Inventory Inventory { get; set; }
         public decimal Coin { get; set; }
     }
