@@ -61,12 +61,27 @@ namespace ItemCatalogue.Controllers
 
         public async Task<RedirectToActionResult> RemoveFromInventory(int id)
         {
-            var selectedItem = await _invItemRepository.GetItemByIdAsync(id);
+            //var selectedItem = await _invItemRepository.GetItemByIdAsync(id);
+            
+            await _inventory.RemoveFromInventoryAsync(id);
+            
+            return RedirectToAction("Index");
+        }
 
-            if (selectedItem != null)
-            {
-                await _inventory.RemoveFromInventoryAsync(selectedItem);
-            }
+        /// <summary>
+        /// Removes the specified amount of selected BaseItem from the inventory.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public async Task<RedirectToActionResult> RemoveBaseItemFromInventory(int id, int? amount)
+        {
+            int itemAmount = 1;
+            if (amount.HasValue)
+                itemAmount = (int)amount;
+            
+            await _inventory.RemoveBaseItemFromInventoryAsync(id, itemAmount);
+
             return RedirectToAction("Index");
         }
 

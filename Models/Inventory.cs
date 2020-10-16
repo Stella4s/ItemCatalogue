@@ -85,11 +85,11 @@ namespace ItemCatalogue.Models
         /// <summary>
         /// Removes a specified InvItem from the Inventory.
         /// </summary>
-        /// <param name="iItem">InvItem</param>
-        public async Task RemoveFromInventoryAsync(InvItem iItem)
+        /// <param name="iItemID">InvItem</param>
+        public async Task RemoveFromInventoryAsync(int iItemID)
         {
             var invItem = await _appDbContext.InvItems.SingleOrDefaultAsync(
-                s => s.InvItemID == iItem.InvItemID);
+                s => s.InvItemID == iItemID);
 
             if (invItem != null)
             {
@@ -102,16 +102,14 @@ namespace ItemCatalogue.Models
         /// <summary>
         /// Removes a set amount of BaseItems from the inventory. If there are enough of them present in the current inventory.
         /// </summary>
-        /// <param name="bItem">Specified BaseItem</param>
+        /// <param name="bItemID">Specified BaseItem</param>
         /// <param name="amount">Amount to remove</param>
-        public async Task RemoveBaseItemFromInventoryAsync(BaseItem bItem, int amount)
+        public async Task RemoveBaseItemFromInventoryAsync(int bItemID, int amount)
         {
             //Find all InvItems that are the right BaseItem and are from this Inventory.
-            //Put them in a list Ordered by Price.
             var invItems = 
                 await _appDbContext.InvItems
-                .Where(s => s.BaseItem.BaseItemID == bItem.BaseItemID && s.InventoryID == InventoryID)
-                .OrderBy(s => s.Price)
+                .Where(s => s.BaseItem.BaseItemID == bItemID && s.InventoryID == InventoryID)
                 .ToListAsync();
 
             if (invItems != null)
@@ -123,7 +121,7 @@ namespace ItemCatalogue.Models
                     //Starting with the first, meaning it removes from highest to lowest price.
                     for(int i = 0; i < amount; i++)
                     {
-                        _appDbContext.InvItems.Remove(invItems.FirstOrDefault());
+                        _appDbContext.InvItems.Remove(invItems[i]);
                     }
                 }
             }

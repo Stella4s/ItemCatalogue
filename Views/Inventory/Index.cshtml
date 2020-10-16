@@ -84,10 +84,13 @@
             </div>
             <div class="w-100"></div>
             <div class="col">
-                @if (Model.SelectedInvItem != null)
-                {
-                    <partial name="_InvItemRemoveFromInventoryButton" model="@Model.SelectedInvItem.InvItemID"/>
-                }
+                <div class="text-center">
+                    @if (Model.SelectedInvItem != null)
+                    {
+                        <partial name="_InvItemRemoveFromInventoryBtn" model="@Model.SelectedInvItem.InvItemID" />
+                        <partial name="_BaseItemRemoveFromInventoryBtn" model="@Model.SelectedInvItem.BaseItemID" />
+                    }
+                </div>
             </div>
         </div>
     </div>

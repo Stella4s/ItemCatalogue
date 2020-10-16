@@ -1,0 +1,14 @@
+﻿@model int
+
+<form class="d-inline-block py-1"
+      asp-action="RemoveBaseItemFromInventory"
+      asp-controller="Inventory"
+      asp-route-id="@Model">
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <input type="submit" value="Remove Multiple" class="btn btn-link" />
+        </div>
+        <input type="number" min="1" class="form-control" name="amount" value="1">
+    </div>
+</form>
