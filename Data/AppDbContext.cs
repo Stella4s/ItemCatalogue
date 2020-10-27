@@ -23,14 +23,19 @@ namespace ItemCatalogue.Data
             //base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<InvItem>()
-                .Property(b => b.Quality)
+                .Property(iv => iv.Quality)
                 .HasDefaultValue(ItemQuality.Basic);
 
             modelBuilder.Entity<CompositeItem>()
-                .HasKey(s => new { s.ParentItemID, s.ChildItemID });
+                .HasKey(c => new { c.ParentItemID, c.ChildItemID });
             modelBuilder.Entity<CompositeItem>()
                 .Property(c => c.Amount)
                 .HasDefaultValue(1);
+            modelBuilder.Entity<CompositeItem>()
+                .HasOne(c => c.ParentItem)
+                .WithMany(b => b.CompositeItems)
+                .HasForeignKey(c => c.ParentItemID)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Seed();

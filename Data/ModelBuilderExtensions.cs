@@ -72,18 +72,6 @@ namespace ItemCatalogue.Data
                 Description = "Yikes.",
                 CategoryID = 1
             });
-            modelBuilder.Entity<BaseItem>().HasData(new BaseItem
-            {
-                //BaseItemID = 7,
-                Name = "Sugar",
-                ImageUrl = ImageNames.ItemIngr01,
-                BasePrice = 1.50M,
-                Description = "Sweet.",
-                CategoryID = 1
-            });
-
-
-
         }
     }
 }
