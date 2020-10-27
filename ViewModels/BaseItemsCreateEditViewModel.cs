@@ -12,5 +12,7 @@ namespace ItemCatalogue.ViewModels
         public BaseItem BaseItem;
 
         public IEnumerable<SelectListItem> Categories;
+
+        public IEnumerable<SelectListItem> Images;
     }
 }

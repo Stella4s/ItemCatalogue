@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="BaseItem.ImageUrl" class="control-label"></label>
-                <input asp-for="BaseItem.ImageUrl" class="form-control" />
+                <select asp-for="BaseItem.ImageUrl" class="form-control" asp-items="Model.Images"></select>
                 <span asp-validation-for="BaseItem.ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="BaseItem.CategoryID" class="control-label"></label>
-                <select asp-for="BaseItem.CategoryID" class ="form-control" asp-items="Model.Categories"></select>
+                <select asp-for="BaseItem.CategoryID" class="form-control" asp-items="Model.Categories"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -10,6 +10,7 @@ using ItemCatalogue.Models;
 using ItemCatalogue.ViewModels;
 using System.Collections;
 using System.ComponentModel;
+using ItemCatalogue.Helpers;
 
 namespace ItemCatalogue.Controllers
 {
@@ -24,6 +25,7 @@ namespace ItemCatalogue.Controllers
             _context = context;
             _baseItemRepository = baseItemRepository;
             _categoryRepository = categoryRepository;
+            
         }
 
         // GET: BaseItems
@@ -60,9 +62,11 @@ namespace ItemCatalogue.Controllers
         // GET: BaseItems/Create
         public async Task<IActionResult> Create()
         {
+            var imageNames = new List<string> { ImageNames.ItemFood01, ImageNames.ItemIngr01, ImageNames.ItemPotion01 };
             var vm = new BaseItemsCreateEditViewModel
             {
-                Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name")
+                Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name"),
+                Images = new SelectList(imageNames, "ImageURL")
             };
 
             return View(vm);
@@ -81,7 +85,10 @@ namespace ItemCatalogue.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var imageNames = new List<string> { ImageNames.ItemFood01, ImageNames.ItemIngr01, ImageNames.ItemPotion01 };
+
             vm.Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name", baseItem.CategoryID);
+            vm.Images = new SelectList(imageNames, "ImageURL", "", baseItem.ImageUrl);
 
             return View(vm);
         }
@@ -100,9 +107,12 @@ namespace ItemCatalogue.Controllers
                 return NotFound();
             }
 
+            var imageNames = new List<string> { ImageNames.ItemFood01, ImageNames.ItemIngr01, ImageNames.ItemPotion01 };
+
             var vm = new BaseItemsCreateEditViewModel
             {
                 Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name"),
+                Images = new SelectList(imageNames, "ImageURL"),
                 BaseItem = baseItem
             };
 
@@ -142,10 +152,12 @@ namespace ItemCatalogue.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            var imageNames = new List<string> { ImageNames.ItemFood01, ImageNames.ItemIngr01, ImageNames.ItemPotion01 };
 
             var vm = new BaseItemsCreateEditViewModel
             {
                 Categories = new SelectList(await _categoryRepository.GetAllCategoriesAsync(), "CategoryID", "Name", baseItem.CategoryID),
+                Images = new SelectList(imageNames, "ImageURL", "", baseItem.ImageUrl),
                 BaseItem = baseItem
             };
 
