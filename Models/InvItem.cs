@@ -11,30 +11,37 @@ namespace ItemCatalogue.Models
 {
     public class InvItem
     {
-        private decimal _Price;
+        public InvItem()
+        {
+        }
+        public InvItem(BaseItem baseItem, ItemQuality quality)
+        {
+            BaseItem = baseItem;
+            Quality = quality;
+            Price = CalculatePrice();
+        }
+
+        //private decimal _Price;
 
         public int InvItemID { get; set; }
 
         public int BaseItemID { get; set; }
         public BaseItem BaseItem { get; set; }
 
+
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Price 
-        { 
-            get { return CalculatePrice(BaseItem.BasePrice, Quality); }
-            set { _Price = value; }
-        }
+        public decimal Price { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public ItemQuality Quality { get; set; }
 
         public string InventoryID { get; set; }
 
-        public InvItem()
-        {
-            Quality = ItemQuality.Basic;   
-        }
 
+        private decimal CalculatePrice()
+        {
+            return BaseItem.BasePrice * QualityToNumber(Quality);
+        }
         public decimal CalculatePrice(decimal basePrice, ItemQuality quality)
         {
             return basePrice * QualityToNumber(quality);

@@ -154,3 +154,23 @@ body {
         .mimic-row div:first-child {
             width: 3em;
         }
+
+/*Control Styles
+    ----------------*/
+.btn-UI-Container {
+    margin: auto;
+}
+
+.btn-UI {
+    display: block;
+    padding: .25rem .50rem;
+    border: 1px solid #dee2e6;
+    border-collapse: collapse;
+    border-radius: .25rem;
+    background-color: transparent;
+}
+
+    .btn-UI:hover {
+        border-color: #dae0e5;
+        background-color: #dee2e6;
+    }

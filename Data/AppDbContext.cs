@@ -22,6 +22,17 @@ namespace ItemCatalogue.Data
         {
             //base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<InvItem>()
+                .Property(b => b.Quality)
+                .HasDefaultValue(ItemQuality.Basic);
+
+            modelBuilder.Entity<CompositeItem>()
+                .HasKey(s => new { s.ParentItemID, s.ChildItemID });
+            modelBuilder.Entity<CompositeItem>()
+                .Property(c => c.Amount)
+                .HasDefaultValue(1);
+
+
             modelBuilder.Seed();
         }
     }

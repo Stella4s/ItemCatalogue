@@ -70,11 +70,15 @@ namespace ItemCatalogue.Models
             //Looping through to create as many as the amount requires.
             for (int i = 0; i < amount; i++)
             {
-                var inventoryItem = new InvItem
+                /*var inventoryItem = new InvItem
                 {
                     InventoryID = InventoryID,
                     BaseItem = bItem,
                     Quality = ItemQuality.Good
+                };*/
+                var inventoryItem = new InvItem(bItem, ItemQuality.Nice)
+                {
+                    InventoryID = InventoryID
                 };
                 await _appDbContext.InvItems.AddAsync(inventoryItem);
             }

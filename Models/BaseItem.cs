@@ -13,6 +13,12 @@ namespace ItemCatalogue.Models
 {
     public class BaseItem
     {
+        //Instantiate Collection in creation of object.
+        public BaseItem()
+        {
+            CompositeItems = new Collection<CompositeItem>();
+        }
+
         public int BaseItemID { get; set; }
         public string Name { get; set; }
 
@@ -28,6 +34,8 @@ namespace ItemCatalogue.Models
 
         [DisplayName("Category")]
         public Category MainCategory { get; set; }
+
+        public Collection<CompositeItem> CompositeItems { get; set; }
     }
 }
 

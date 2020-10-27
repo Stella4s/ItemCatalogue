@@ -9,6 +9,7 @@ namespace ItemCatalogue.Data
     public interface IBaseItemRepository
     {
         Task<IEnumerable<BaseItem>> GetAllItemsAsync();
+        Task<IEnumerable<BaseItem>> GetAllCompItemsAsync();
         Task<BaseItem> GetItemByIdAsync(int itemID);
     }
 }
