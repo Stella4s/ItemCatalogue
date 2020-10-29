@@ -19,9 +19,12 @@ namespace ItemCatalogue.Data
         {
             return await _appDbContext.BaseItems.Include(c => c.MainCategory).ToListAsync();
         }
-        public async Task<IEnumerable<BaseItem>> GetAllCompItemsAsync()
+        public async Task<IEnumerable<BaseItem>> GetAllItemsAndCompositesAsync()
         {
-            return await _appDbContext.BaseItems.Include(c => c.MainCategory).Include(c => c.CompositeItems).ThenInclude(c => c.ChildItem).ToListAsync();
+            return await _appDbContext.BaseItems.Include(c => c.MainCategory)
+                .Include(c => c.ResultItems).ThenInclude(c => c.ResultItem)
+                .Include(c => c.SubItems).ThenInclude(c => c.SubItem)
+                .ToListAsync();
         }
 
         public async Task<BaseItem> GetItemByIdAsync(int itemID)

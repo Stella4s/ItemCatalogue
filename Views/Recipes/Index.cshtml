@@ -1,0 +1,87 @@
+﻿@model RecipesIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+
+            <div class="mb-1">
+                <a asp-action="Create">Create New</a>
+
+                <div class="d-inline-flex">
+                    @if (Model.SelectedBaseItem != null)
+                    {
+                        
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9">
+
+            <div class="list-group list-group-flush mimic-table table">
+                <div class="mimic-headergroup">
+                    <div class="mimic-row">
+                        <div></div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Name)
+                        </div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().BasePrice)
+                        </div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Description)
+                        </div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().MainCategory)
+                        </div>
+                    </div>
+                </div>
+                <div class="mimic-rowgroup">
+                    @foreach (var item in Model.BaseItems)
+                    {
+                        string selectedRow = "";
+                        if (Model.SelectedBaseItem != null)
+                        {
+                            if (item.BaseItemID == (int?)Model.SelectedBaseItem.BaseItemID)
+                            {
+                                selectedRow = "active";
+                            }
+                        }
+                        <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                            <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                            <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                            <div> @Html.DisplayFor(modelItem => item.BasePrice)</div>
+                            <div> @Html.DisplayFor(modelItem => item.Description)</div>
+                            <div> @Html.DisplayFor(modelItem => item.MainCategory.Name)</div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-3">
+            <div class="col">
+                @if (Model.SelectedBaseItem != null)
+                {
+                    <partial name="_ItemDetailCard" model="@Model.SelectedBaseItem" />
+                }
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                @if (Model.SelectedBaseItem != null)
+                {
+                    <partial name="_ItemPageLinks" model="@Model.SelectedBaseItem.BaseItemID" />
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

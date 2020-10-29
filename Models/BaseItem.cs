@@ -16,7 +16,8 @@ namespace ItemCatalogue.Models
         //Instantiate Collection in creation of object.
         public BaseItem()
         {
-            CompositeItems = new Collection<CompositeItem>();
+            ResultItems = new Collection<ItemComposite>();
+            SubItems = new Collection<ItemComposite>();
         }
 
         public int BaseItemID { get; set; }
@@ -35,7 +36,14 @@ namespace ItemCatalogue.Models
         [DisplayName("Category")]
         public Category MainCategory { get; set; }
 
-        public Collection<CompositeItem> CompositeItems { get; set; }
+        /// <summary>
+        /// The resulting items this item can be made into.
+        /// </summary>
+        public Collection<ItemComposite> ResultItems { get; set; }
+        /// <summary>
+        /// The items that are made into this item.
+        /// </summary>
+        public Collection<ItemComposite> SubItems { get; set; }
     }
 }
 

@@ -26,16 +26,21 @@ namespace ItemCatalogue.Data
                 .Property(iv => iv.Quality)
                 .HasDefaultValue(ItemQuality.Basic);
 
-            modelBuilder.Entity<CompositeItem>()
-                .HasKey(c => new { c.ParentItemID, c.ChildItemID });
-            modelBuilder.Entity<CompositeItem>()
+            modelBuilder.Entity<ItemComposite>()
+                .HasKey(c => new { c.ResultItemID, c.SubItemID });
+            modelBuilder.Entity<ItemComposite>()
                 .Property(c => c.Amount)
                 .HasDefaultValue(1);
-            modelBuilder.Entity<CompositeItem>()
-                .HasOne(c => c.ParentItem)
-                .WithMany(b => b.CompositeItems)
-                .HasForeignKey(c => c.ParentItemID)
+            modelBuilder.Entity<ItemComposite>()
+                .HasOne(c => c.ResultItem)
+                .WithMany(b => b.ResultItems)
+                .HasForeignKey(c => c.ResultItemID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ItemComposite>()
+               .HasOne(c => c.SubItem)
+               .WithMany(b => b.SubItems)
+               .HasForeignKey(c => c.SubItemID)
+               .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Seed();
