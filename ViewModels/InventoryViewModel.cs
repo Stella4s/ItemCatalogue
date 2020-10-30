@@ -10,6 +10,9 @@ namespace ItemCatalogue.ViewModels
     {
         public InvItem SelectedInvItem { get; set; }
         public Inventory Inventory { get; set; }
+
+        public BaseItem SelectedRecipeItem;
+        public IEnumerable<BaseItem> RecipeItems { get; set; }
         public decimal Coin { get; set; }
     }
 }

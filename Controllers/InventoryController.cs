@@ -24,20 +24,29 @@ namespace ItemCatalogue.Controllers
         }
 
         // GET: InventoryController
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, int? selectedRecipeID)
         {
             var items = await _inventory.GetInventoryItemsAsync();
             _inventory.InventoryItems = items;
 
+            var recipes = await _baseItemRepository.GetAllRecipeItemsAsync();
+            recipes = recipes.Where(c => c.SubItems.Count() > 0);
+
+
             var vm = new InventoryViewModel
             {
                 Inventory = _inventory,
-                Coin = _inventory.Coin
+                Coin = _inventory.Coin,
+                RecipeItems = recipes
             };
 
             if (id.HasValue)
             {
                 vm.SelectedInvItem = vm.Inventory.InventoryItems.Where(i => i.InvItemID == id.Value).Single();
+            }
+            if (selectedRecipeID.HasValue)
+            {
+                vm.SelectedRecipeItem = vm.RecipeItems.Where(i => i.BaseItemID == selectedRecipeID.Value).Single();
             }
 
             return View(vm);

@@ -9,6 +9,7 @@ using ItemCatalogue.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ItemCatalogue.Controllers
 {
@@ -17,19 +18,35 @@ namespace ItemCatalogue.Controllers
         private readonly AppDbContext _context;
         private readonly IBaseItemRepository _baseItemRepository;
         private readonly ICategoryRepository _categoryRepository;
+        //private readonly Inventory _inventory;
 
         public RecipesController(AppDbContext context, IBaseItemRepository baseItemRepository, ICategoryRepository categoryRepository)
         {
             _context = context;
             _baseItemRepository = baseItemRepository;
             _categoryRepository = categoryRepository;
-
+            //_inventory = inventory;
         }
 
         public async Task<IActionResult> Index(int? id)
         {
+            //var items = await _inventory.GetInventoryItemsAsync();
+            //_inventory.InventoryItems = items;
+
             var vm = new RecipesIndexViewModel();
             vm.BaseItems = await _baseItemRepository.GetAllItemsAndCompositesAsync();
+            //vm.Inventory = _inventory;
+
+            /*First Attempt to combine BaseItems and the amount of items in the inventory.
+             * var query = vm.BaseItems.GroupJoin(_inventory.InventoryItems.GroupBy(b => b.BaseItemID),
+                         baseItem => baseItem.BaseItemID,
+                         invGroup => invGroup.Count(),
+                         (baseI, itemCollection) =>
+                             new
+                             {
+                                 baseItemTemp = baseI,
+                                 count = itemCollection.Select(t => t.Key)
+                             });*/
 
             if (id != null)
             {
@@ -68,7 +85,7 @@ namespace ItemCatalogue.Controllers
             {
                 vm.SelectedOptionItem = vm.OptionItems.Where(i => i.BaseItemID == selectedID.Value).Single();
             }
-            if (selectedIngredientID != null)
+            if(selectedIngredientID != null)
             {
                 vm.SelectedIngredientItem = vm.IngredientItems.Where(i => i.SubItemID == selectedIngredientID.Value).Single();
             }

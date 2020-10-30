@@ -7,37 +7,13 @@
 
     <div class="row">
         <div class="col-12">
-            <h2>Your Inventory</h2>
+        
         </div>
     </div>
 
     <div class="row">
-        <div class="col-9">
-            <!--Old Table
-    <div class="row">
-        <table class="table table-catalogue">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Item</th>
-                    <th>Quality</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Inventory.InventoryItems)
-                {
-                    <tr>
-                        <td><img src="@Url.Content("~/Images/" + item.BaseItem.ImageUrl)" /></td>
-                        <td>@item.BaseItem.Name</td>
-                        <td>@item.Quality</td>
-                        <td>@item.Price.ToString("n2")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>-->
-
+        <div class="col-4">
+            <h4>Inventory</h4>
             <div class="list-group list-group-flush mimic-table table">
                 <div class="mimic-headergroup">
                     <div class="mimic-row">
@@ -64,7 +40,7 @@
                                 selectedRow = "active";
                             }
                         }
-                        <a asp-action="Index" asp-route-id="@item.InvItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                        <a asp-action="Index" asp-route-id="@item.InvItemID" asp-route-selectedRecipeID="" class="list-group-item list-group-item-action mimic-row @selectedRow">
                             <div><img src="@Url.Content("~/Images/" + item.BaseItem.ImageUrl)" /></div>
                             <div> @item.BaseItem.Name</div>
                             <div> @item.Quality</div>
@@ -75,11 +51,47 @@
             </div>
         </div>
 
+        <div class="col-4">
+            <h4>Recipes</h4>
+            <div class="list-group list-group-flush mimic-table table">
+                <div class="mimic-headergroup">
+                    <div class="mimic-row">
+                        <div></div>
+                        <div>
+                            Item
+                        </div>
+                    </div>
+                </div>
+                <div class="mimic-rowgroup">
+                    @foreach (var item in Model.RecipeItems)
+                    {
+                        string selectedRow = "";
+                        if (Model.SelectedRecipeItem != null)
+                        {
+                            if (item.BaseItemID == (int?)Model.SelectedRecipeItem.BaseItemID)
+                            {
+                                selectedRow = "active";
+                            }
+                        }
+                        <a asp-action="Index" asp-route-id="" asp-route-selectedRecipeID="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                            <div><img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                            <div> @item.Name</div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-3">
             <div class="col">
                 @if (Model.SelectedInvItem != null)
                 {
                     <partial name="_ItemDetailCard" model="@Model.SelectedInvItem.BaseItem" />
+                }
+                @if (Model.SelectedRecipeItem != null)
+                {
+                    <partial name="_RecipeDetailCard" model="@Model.SelectedRecipeItem" />
                 }
             </div>
             <div class="w-100"></div>
@@ -94,5 +106,6 @@
             </div>
         </div>
     </div>
+
 
 </div>

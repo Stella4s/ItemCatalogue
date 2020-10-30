@@ -42,10 +42,10 @@
                                 selectedRow = "active";
                             }
                         }
-                        <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
-                            <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
-                            <div> @Html.DisplayFor(modelItem => item.Name)</div>
-                        </a>
+                    <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                        <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                        <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                    </a>
                     }
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="col">
                 @if (Model.SelectedBaseItem != null)
                 {
-                    <partial name="_ItemDetailCard" model="@Model.SelectedBaseItem" />
+                    <partial name="_RecipeDetailCard" model="@Model.SelectedBaseItem" />
                 }
             </div>
             <div class="w-100"></div>

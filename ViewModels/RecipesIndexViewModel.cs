@@ -9,6 +9,8 @@ namespace ItemCatalogue.ViewModels
     public class RecipesIndexViewModel
     {
         public BaseItem SelectedBaseItem { get; set; }
+        //public Inventory Inventory { get; set; }
         public IEnumerable<BaseItem> BaseItems { get; set; }
+
     }
 }

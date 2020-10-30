@@ -52,6 +52,13 @@ namespace ItemCatalogue.Data
                 })
                 .FirstOrDefaultAsync();*/
         }
+
+        public async Task<IEnumerable<BaseItem>> GetAllRecipeItemsAsync()
+        {
+            return await _appDbContext.BaseItems.Include(c => c.MainCategory)
+               .Include(c => c.SubItems).ThenInclude(c => c.SubItem)
+               .ToListAsync();
+        }
     }
     
 }
