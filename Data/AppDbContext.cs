@@ -33,12 +33,12 @@ namespace ItemCatalogue.Data
                 .HasDefaultValue(1);
             modelBuilder.Entity<ItemComposite>()
                 .HasOne(c => c.ResultItem)
-                .WithMany(b => b.ResultItems)
+                .WithMany(b => b.SubItems)
                 .HasForeignKey(c => c.ResultItemID)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ItemComposite>()
                .HasOne(c => c.SubItem)
-               .WithMany(b => b.SubItems)
+               .WithMany(b => b.ResultItems)
                .HasForeignKey(c => c.SubItemID)
                .OnDelete(DeleteBehavior.Restrict);
 

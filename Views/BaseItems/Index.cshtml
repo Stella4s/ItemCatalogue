@@ -93,6 +93,15 @@
                             <div>
                                 @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Name)
                             </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().BasePrice)
+                            </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().Description)
+                            </div>
+                            <div>
+                                @Html.DisplayNameFor(model => model.BaseItems.FirstOrDefault().MainCategory)
+                            </div>
                         </div>
                     </div>
                     <div class="mimic-rowgroup">
@@ -106,10 +115,13 @@
                                     selectedRow = "active";
                                 }
                             }
-                            <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
-                                <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
-                                <div> @Html.DisplayFor(modelItem => item.Name)</div>
-                            </a>
+                        <a asp-action="Index" asp-route-id="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                            <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                            <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                            <div> @Html.DisplayFor(modelItem => item.BasePrice)</div>
+                            <div> @Html.DisplayFor(modelItem => item.Description)</div>
+                            <div> @Html.DisplayFor(modelItem => item.MainCategory.Name)</div>
+                        </a>
                         }
                     </div>
                 </div>

@@ -31,6 +31,27 @@ namespace ItemCatalogue.Data
         {
             return await _appDbContext.BaseItems.FirstOrDefaultAsync(p => p.BaseItemID == itemID);
         }
-        
+
+        public async Task<BaseItem> GetItemAndCompositesByIdAsync(int itemID)
+        {
+            //First method
+            return await _appDbContext.BaseItems
+                .Include(s => s.ResultItems)
+                .ThenInclude(ic => ic.ResultItem)
+                .Include(s => s.SubItems)
+                .ThenInclude(ic => ic.SubItem)
+                .FirstOrDefaultAsync(p => p.BaseItemID == itemID);
+
+            //Second "cleaner?" method. But this only returns a projection, not an actual baseItem instance.
+            /*var ItemWithComp = _appDbContext.BaseItems.Where(b => b.BaseItemID == itemID)
+                .Select(s => new
+                {
+                    BaseItem = s,
+                    ResultItems = s.ResultItems.Select(ic => ic.ResultItem),
+                    SubItems = s.SubItems.Select(ic => ic.SubItem)
+                })
+                .FirstOrDefaultAsync();*/
+        }
     }
+    
 }

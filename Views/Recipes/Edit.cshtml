@@ -1,0 +1,136 @@
+﻿@model RecipesCreateEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="@Url.Content("~/Images/" + Model.MainBaseItem.ImageUrl)" class="card-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => Model.MainBaseItem.Name)</h5>
+                            <p class="card-text">@Html.DisplayFor(modelItem => Model.MainBaseItem.Description)</p>
+                            <p class="card-text"><small class="text-muted">@Html.DisplayFor(modelItem => Model.MainBaseItem.BasePrice)</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <h5>Ingredient Options</h5>
+            <div class="list-group list-group-flush mimic-table table">
+                <div class="mimic-headergroup">
+                    <div class="mimic-row">
+                        <div></div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.OptionItems.FirstOrDefault().Name)
+                        </div>
+                    </div>
+                </div>
+                <div class="mimic-rowgroup">
+                    @foreach (var item in Model.OptionItems)
+                    {
+                        string selectedRow = "";
+                        if (Model.SelectedOptionItem != null)
+                        {
+                            if (item.BaseItemID == (int?)Model.SelectedOptionItem.BaseItemID)
+                            {
+                                selectedRow = "active";
+                            }
+                        }
+                        <a asp-action="Edit" asp-route-selectedID="@item.BaseItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                            <div>  <img src="@Url.Content("~/Images/" + item.ImageUrl)" /></div>
+                            <div> @Html.DisplayFor(modelItem => item.Name)</div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-6">
+            <h5>Current Ingredients</h5>
+            <div class="list-group list-group-flush mimic-table table">
+                <div class="mimic-headergroup">
+                    <div class="mimic-row">
+                        <div></div>
+                        <div>
+                            @Html.DisplayNameFor(model => model.IngredientItems.FirstOrDefault().SubItem.Name)
+                        </div>
+                        <div> @Html.DisplayNameFor(model => model.IngredientItems.FirstOrDefault().Amount)</div>
+                    </div>
+                </div>
+                <div class="mimic-rowgroup">
+                    @foreach (var item in Model.IngredientItems)
+                    {
+                        string selectedRow = "";
+                        if (Model.SelectedIngredientItem != null)
+                        {
+                            if (item.SubItemID == (int?)Model.SelectedIngredientItem.SubItemID)
+                            {
+                                selectedRow = "active";
+                            }
+                        }
+                        <a asp-action="Edit" asp-route-selectedIngredientID="@item.SubItemID" class="list-group-item list-group-item-action mimic-row @selectedRow">
+                            <div>  <img src="@Url.Content("~/Images/" + item.SubItem.ImageUrl)" /></div>
+                            <div> @Html.DisplayFor(modelItem => item.SubItem.Name)</div>
+                            <div> @Html.DisplayFor(model => item.Amount)</div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="col">
+        @if (Model.SelectedOptionItem != null)
+        {
+            <form class="btn-group"
+                  asp-action="AddIngredient"
+                  asp-controller="Recipes"
+                  asp-route-id="@Model.MainBaseItem.BaseItemID"
+                  asp-route-ingredientID="@Model.SelectedOptionItem.BaseItemID">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <input type="submit" value="Add" class="btn btn-link" />
+                    </div>
+                    <input type="number" min="1" class="form-control" name="amount" value="1">
+                </div>
+            </form>
+        }
+
+        @if (Model.SelectedIngredientItem != null)
+        {
+            <form class="btn-group"
+                  asp-action="RemoveIngredient"
+                  asp-controller="Recipes"
+                  asp-route-id="@Model.MainBaseItem.BaseItemID"
+                  asp-route-ingredientID="@Model.SelectedIngredientItem.SubItemID">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <input type="submit" value="Remove" class="btn btn-link" />
+                    </div>
+                    <input type="number" min="1" class="form-control" name="amount" value="1">
+                </div>
+            </form>
+        }
+    </div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -155,6 +155,36 @@ body {
             width: 3em;
         }
 
+/* Mimic Table Tiny
+            ---------------------*/
+.mimic-table-tiny {
+    display: table;
+    width: 100%;
+    border-spacing: 2px;
+    border-collapse: collapse;
+}
+
+    .mimic-table-tiny img {
+        width: 1.5em;
+    }
+
+.mimic-row-tiny {
+    display: table-row;
+    padding: 0.10rem;
+    vertical-align: middle;
+}
+
+    .mimic-row-tiny div {
+        display: table-cell;
+        padding: 0.10rem;
+        vertical-align: middle;
+        border-top: 1px solid #dee2e6;
+    }
+
+        .mimic-row-tiny div:first-child {
+            width: 2em;
+        }
+
 /*Control Styles
     ----------------*/
 .btn-UI-Container {

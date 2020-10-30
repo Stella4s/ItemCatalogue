@@ -11,5 +11,6 @@ namespace ItemCatalogue.Data
         Task<IEnumerable<BaseItem>> GetAllItemsAsync();
         Task<IEnumerable<BaseItem>> GetAllItemsAndCompositesAsync();
         Task<BaseItem> GetItemByIdAsync(int itemID);
+        Task<BaseItem> GetItemAndCompositesByIdAsync(int itemID);
     }
 }

@@ -3,14 +3,16 @@ using ItemCatalogue.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ItemCatalogue.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201030083147_itemCompositesReMapping")]
+    partial class itemCompositesReMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,14 +205,14 @@ namespace ItemCatalogue.Migrations
 
             modelBuilder.Entity("ItemCatalogue.Models.ItemComposite", b =>
                 {
-                    b.HasOne("ItemCatalogue.Models.BaseItem", "ResultItem")
-                        .WithMany("SubItems")
+                    b.HasOne("ItemCatalogue.Models.BaseItem", "SubItem")
+                        .WithMany("ResultItems")
                         .HasForeignKey("ResultItemID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ItemCatalogue.Models.BaseItem", "SubItem")
-                        .WithMany("ResultItems")
+                    b.HasOne("ItemCatalogue.Models.BaseItem", "ResultItem")
+                        .WithMany("SubItems")
                         .HasForeignKey("SubItemID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
